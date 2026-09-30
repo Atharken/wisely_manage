@@ -23,6 +23,26 @@ regions = {
     "15": ("NP", "Nepal")
 }
 
+def search(x):
+    new_l = []
+    with open("acc_data.csv","r",newline="") as f:
+        r = csv.DictReader(f)
+        l1 = list(r)
+
+        for i in l1:
+            if x.strip().lower() == i['account'].strip().lower():
+              new_l.append(i)
+
+
+    return new_l
+                
+             
+
+
+
+
+
+
 
 def inrternational_number(raw_number, region="IN"):
     # Parse the raw number string with a default region (e.g., 'IN' for India)
@@ -73,8 +93,10 @@ while True:
 
         account = input("enter your account\n:")  #_____________account
 
-        typee = input("enter account type\n1.ultimate xbox gamepass\n2.premium xbox gamepass\n3.rock star account\n4.others\n:")
+        
 
+        typee = input("enter account type\n1.ultimate xbox gamepass\n2.premium xbox gamepass\n3.rock star account\n4.others\n:")
+        
         for i in l:
            if typee in i:
 
@@ -85,24 +107,38 @@ while True:
 
         print(regions)
         region = input("enter number format\n:")
+        
         raw_number = input("enter phone number\n:")
 
         num = inrternational_number(raw_number, region)   #_____________number
 
         print(num)
 
-        date = date.today()    #________________start
+        current_date = date.today()    #________________start
 
-        print(date)
+        print(current_date)
+        try:
 
-        end = int(input("enter rent time period\n: "))
-        end_date = date + timedelta(days=end)        #____________end
+            end = int(input("enter rent time period\n: "))
+        except ValueError:
+            print("enter numeric value only !!!")
+            continue
 
-        data = {"account" : account,"type" : typ,"number" : num,"date" : date,"end_date" : end_date}
+        end_date = current_date + timedelta(days=end)        #____________end
+
+        data = {"account" : account,"type" : typ,"number" : num,"date" : current_date,"end_date" : end_date}
         with open("acc_data.csv","a",newline="") as f:
             w = csv.DictWriter(f,fieldnames=headers)
             w.writerow(data)
 
+    elif main == "2":
+
+        print("===search by account===")
+        x = input("enter your account\n:")
+
+        y = search(x)
+
+        print(y)
 
 
     elif main == "5":
@@ -110,4 +146,4 @@ while True:
             
 
     
-        
+        #edit and remove next time also polish this code too
