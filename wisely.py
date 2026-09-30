@@ -2,6 +2,27 @@ import csv
 from pathlib import Path
 import phonenumbers
 from phonenumbers import PhoneNumberFormat
+from datetime import date, timedelta
+
+
+regions = {
+    "1": ("IN", "India"),
+    "2": ("US", "United States"),
+    "3": ("GB", "United Kingdom"),
+    "4": ("CA", "Canada"),
+    "5": ("AU", "Australia"),
+    "6": ("AE", "United Arab Emirates"),
+    "7": ("SA", "Saudi Arabia"),
+    "8": ("SG", "Singapore"),
+    "9": ("DE", "Germany"),
+    "10": ("FR", "France"),
+    "11": ("JP", "Japan"),
+    "12": ("CN", "China"),
+    "13": ("PK", "Pakistan"),
+    "14": ("BD", "Bangladesh"),
+    "15": ("NP", "Nepal")
+}
+
 
 def inrternational_number(raw_number, region="IN"):
     # Parse the raw number string with a default region (e.g., 'IN' for India)
@@ -38,16 +59,19 @@ if not p.exists():
 while True:
 
 
-    main = input("1.add rent account\n2.search by account\n3.remove account\n4.edit account\n:")
+    main = input("1.add rent account\n2.search by account\n3.remove account\n4.edit account\n5.exit\n:")
 
 
     if main == "1":
 
-        typ = ""
+        
+
+
+        typ = "" #____________type
 
         l = {"1" : "ultimate xbox gamepass","2" : "premium xbox gamepass","3" : "rockstar account"}
 
-        account = input("enter your account\n:")
+        account = input("enter your account\n:")  #_____________account
 
         typee = input("enter account type\n1.ultimate xbox gamepass\n2.premium xbox gamepass\n3.rock star account\n4.others\n:")
 
@@ -59,16 +83,31 @@ while True:
         if typee == "4":
             typ = input("enter other account type\n:")
 
-
+        print(regions)
         region = input("enter number format\n:")
         raw_number = input("enter phone number\n:")
 
-        num = inrternational_number(raw_number, region)
+        num = inrternational_number(raw_number, region)   #_____________number
 
         print(num)
 
-        
+        date = date.today()    #________________start
+
+        print(date)
+
+        end = int(input("enter rent time period\n: "))
+        end_date = date + timedelta(days=end)        #____________end
+
+        data = {"account" : account,"type" : typ,"number" : num,"date" : date,"end_date" : end_date}
+        with open("acc_data.csv","a",newline="") as f:
+            w = csv.DictWriter(f,fieldnames=headers)
+            w.writerow(data)
 
 
-          1
+
+    elif main == "5":
+        break
+            
+
+    
         
