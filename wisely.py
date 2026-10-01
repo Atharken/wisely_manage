@@ -35,6 +35,15 @@ def search(x):
 
 
     return new_l
+
+
+def remove():
+
+        with open("acc_data.csv","r",newline="") as f:
+          r = csv.DictReader(f)
+          l1 = list(r)
+
+        return l1
                 
              
 
@@ -110,7 +119,7 @@ while True:
         
         raw_number = input("enter phone number\n:")
 
-        num = inrternational_number(raw_number, region)   #_____________number
+        num = inrternational_number(raw_number, region.upper())   #_____________number
 
         print(num)
 
@@ -139,6 +148,38 @@ while True:
         y = search(x)
 
         print(y)
+
+    elif main == "3":
+
+        l = []
+
+        option = input("1.by search\n2.by all index")
+
+        if option == "1":
+
+            x = input("enter your account\n:")
+
+            y = remove()
+
+            for index, value in enumerate(y):
+                l.append(value)
+                if value['account'] == x:
+                    print(f"{index}  {value}")
+            try:
+                rem = int(input("enter index to remove"))
+            except ValueError:
+                print("wrong input enter numeric value")
+                continue
+            l.pop(rem)     
+
+            with open("acc_data.csv","w",newline="") as f:
+                        w = csv.DictWriter(f,fieldnames=headers)
+                        w.writerows(l)
+                       
+
+
+
+
 
 
     elif main == "5":
