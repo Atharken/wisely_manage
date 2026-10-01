@@ -166,7 +166,7 @@ while True:
                 if value['account'] == x:
                     print(f"{index}  {value}")
             try:
-                rem = int(input("enter index to remove"))
+                rem = int(input("enter index to remove\n:"))
             except ValueError:
                 print("wrong input enter numeric value")
                 continue
@@ -174,12 +174,29 @@ while True:
 
             with open("acc_data.csv","w",newline="") as f:
                         w = csv.DictWriter(f,fieldnames=headers)
+                        w.writeheader()
                         w.writerows(l)
-                       
+        elif option == "2":
 
+            y = remove()
 
+            l = []
 
+            for index,value in enumerate(y):
+                print(f"index - {index} {value}")
+                l.append(value)
 
+            try:
+                rem = int(input("enter index to remove\n:"))
+            except ValueError:
+                print("wrong input enter numeric value")
+                continue
+            l.pop(rem)     
+
+            with open("acc_data.csv","w",newline="") as f:
+                        w = csv.DictWriter(f,fieldnames=headers)
+                        w.writeheader()
+                        w.writerows(l)
 
 
     elif main == "5":
