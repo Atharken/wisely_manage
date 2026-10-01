@@ -153,7 +153,7 @@ while True:
 
         l = []
 
-        option = input("1.by search\n2.by all index")
+        option = input("1.by search\n2.by all index\n:")
 
         if option == "1":
 
@@ -197,6 +197,37 @@ while True:
                         w = csv.DictWriter(f,fieldnames=headers)
                         w.writeheader()
                         w.writerows(l)
+
+    elif main == "3":
+
+        y = remove()
+
+        l = []
+
+        for index,value in enumerate(y):
+            print(f"index - {index} {value}")
+            l.append(value)
+
+        try:
+            rem = int(input("enter index to remove\n:"))
+        except ValueError:
+            print("wrong input enter numeric value")
+            continue
+
+
+        
+        
+        
+
+        with open("acc_data.csv","w",newline="") as f:
+            w = csv.DictWriter(f,fieldnames=headers)
+            w.writeheader()
+            w.writerows(l)
+
+        
+
+
+
 
 
     elif main == "5":
