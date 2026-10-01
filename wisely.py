@@ -37,7 +37,7 @@ def search(x):
     return new_l
 
 
-def remove():
+def load_data():
 
         with open("acc_data.csv","r",newline="") as f:
           r = csv.DictReader(f)
@@ -46,6 +46,33 @@ def remove():
         return l1
                 
              
+def save(x):
+      
+      with open("acc_data.csv","w",newline="") as f:
+                w = csv.DictWriter(f,fieldnames=headers)
+                w.writeheader()
+                w.writerows(x)
+
+def edit(d,p,np):
+
+    x = load_data()
+
+    if p == "account":
+        d[p] = np
+
+    elif p == "type":
+        d[p] = np
+
+    elif p == "number":
+        d[p] = np
+
+    elif p == "date":
+        d[p] = np
+
+    elif p == "end_date":
+        d[p] = np
+
+
 
 
 
@@ -159,7 +186,7 @@ while True:
 
             x = input("enter your account\n:")
 
-            y = remove()
+            y = load_data()
 
             for index, value in enumerate(y):
                 l.append(value)
@@ -172,13 +199,12 @@ while True:
                 continue
             l.pop(rem)     
 
-            with open("acc_data.csv","w",newline="") as f:
-                        w = csv.DictWriter(f,fieldnames=headers)
-                        w.writeheader()
-                        w.writerows(l)
+
+            save(l)
+
         elif option == "2":
 
-            y = remove()
+            y = load_data()
 
             l = []
 
@@ -193,37 +219,41 @@ while True:
                 continue
             l.pop(rem)     
 
-            with open("acc_data.csv","w",newline="") as f:
-                        w = csv.DictWriter(f,fieldnames=headers)
-                        w.writeheader()
-                        w.writerows(l)
 
-    elif main == "3":
+            save(l)
+    elif main == "4":
 
-        y = remove()
+        y = load_data()
 
         l = []
+
+        chan = {
+            1 : "account",
+            2 : "type",
+            3 : "number",
+            4 : "date",
+            5 : "end_date"
+        }
 
         for index,value in enumerate(y):
             print(f"index - {index} {value}")
             l.append(value)
 
+        ind = int(input("enter index of acc u want to edit\n:"))
         try:
-            rem = int(input("enter index to remove\n:"))
+            change = int(input("1.account\n2.type\n3.number\n4.date\n5.end_date"))
         except ValueError:
-            print("wrong input enter numeric value")
+            print("only integer value is valid")
             continue
 
+        final_change = input("enter your change\n:")
+            
+        edit(l[ind],chan[change],final_change)
+
 
         
         
-        
-
-        with open("acc_data.csv","w",newline="") as f:
-            w = csv.DictWriter(f,fieldnames=headers)
-            w.writeheader()
-            w.writerows(l)
-
+        save(l)
         
 
 
