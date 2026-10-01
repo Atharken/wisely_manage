@@ -3,6 +3,7 @@ from pathlib import Path
 import phonenumbers
 from phonenumbers import PhoneNumberFormat
 from datetime import date, timedelta
+from phonenumbers.phonenumberutil import NumberParseException
 
 
 regions = {
@@ -55,27 +56,7 @@ def save(x):
 
 def edit(d,p,np):
 
-    x = load_data()
-
-    if p == "account":
         d[p] = np
-
-    elif p == "type":
-        d[p] = np
-
-    elif p == "number":
-        d[p] = np
-
-    elif p == "date":
-        d[p] = np
-
-    elif p == "end_date":
-        d[p] = np
-
-
-
-
-
 
 
 
@@ -143,8 +124,14 @@ while True:
 
         print(regions)
         region = input("enter number format\n:")
+
+        try:
         
-        raw_number = input("enter phone number\n:")
+            raw_number = input("enter phone number\n:")
+
+        except ValueError:
+            print("invalid number")
+            continue
 
         num = inrternational_number(raw_number, region.upper())   #_____________number
 
@@ -158,6 +145,9 @@ while True:
             end = int(input("enter rent time period\n: "))
         except ValueError:
             print("enter numeric value only !!!")
+            continue
+        except NumberParseException:
+            print("could not understand that phone number")
             continue
 
         end_date = current_date + timedelta(days=end)        #____________end
@@ -173,6 +163,12 @@ while True:
         x = input("enter your account\n:")
 
         y = search(x)
+
+        if len(y) < 1:
+
+            print(f"no {x} account found")
+            continue
+
 
         print(y)
 
@@ -239,8 +235,8 @@ while True:
             print(f"index - {index} {value}")
             l.append(value)
 
-        ind = int(input("enter index of acc u want to edit\n:"))
         try:
+            ind = int(input("enter index of acc u want to edit\n:"))
             change = int(input("1.account\n2.type\n3.number\n4.date\n5.end_date"))
         except ValueError:
             print("only integer value is valid")
