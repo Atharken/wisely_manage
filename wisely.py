@@ -23,6 +23,18 @@ regions = {
     "14": ("BD", "Bangladesh"),
     "15": ("NP", "Nepal")
 }
+def due():
+
+    x =  load_data()
+    current_date = date.today()
+    l = [] 
+    for i in x:
+        if  date.fromisoformat(i['end_date']) < current_date:
+            l.append(i)
+
+    return l
+
+
 
 def search(x):
     new_l = []
@@ -95,6 +107,9 @@ if not p.exists():
 
 while True:
 
+    d = due()
+    for i in d:
+        print(i)
 
     main = input("1.add rent account\n2.search by account\n3.remove account\n4.edit account\n5.exit\n:")
 
